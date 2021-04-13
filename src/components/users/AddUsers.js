@@ -18,6 +18,8 @@ const onInputChange = e => {
   console.log(e.target.id);
   //Understand this
   setUser({...user, [e.target.name]: e.target.value})
+  
+  
 };
 
 const onSubmit =async (e) =>
