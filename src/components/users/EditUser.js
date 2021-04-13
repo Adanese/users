@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
-import {useHistory} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
+const EditUser = () => {
+  let history = useHistory();
+  const { id } = useParams();
 
-
-const AddUsers = () => {
- let history = useHistory();
   const [user, setUser] = useState({
     name: "",
     userName: "",
@@ -14,22 +14,33 @@ const AddUsers = () => {
     website: "",
   });
 
-const onInputChange = e => {
-  console.log(e.target.id);
-  //Understand this
-  setUser({...user, [e.target.name]: e.target.value})
-};
+  const onInputChange = (e) => {
+    console.log(e.target.id);
+    //Understand this
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
-const onSubmit =async (e) =>
-{
-e.preventDefault();
-await axios.post("http://localhost:3001/users", user);
-history.push("/");
-}
+  useEffect(() => {
+    loadUser();
+  }, []);
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.put("http://localhost:3001/users/" +id, user);
+    history.push("/");
+  };
+
+  const loadUser = async () => {
+    const result = await axios.get("http://localhost:3001/users/" + id);
+    // same as 
+    // const result = await axios.get("http://localhost:3001/users/${id}");
+    console.log(result);
+    setUser(result.data);
+  };
 
   return (
     <div class="mx-auto">
+      <h1>Edit User</h1>
       <div className="w-50 p-3">
         <form onSubmit={onSubmit}>
           <div class="form-group">
@@ -113,7 +124,7 @@ history.push("/");
           </div>
 
           <button type="submit" class="btn btn-primary">
-            Submit
+            Update User
           </button>
         </form>
       </div>
@@ -121,4 +132,4 @@ history.push("/");
   );
 };
 
-export default AddUsers;
+export default EditUser;

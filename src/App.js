@@ -9,11 +9,13 @@ import Navbar from "./components/pages/layout/Navbar";
 import NotFound from "./components/pages/NotFound";
 
 import AddUsers from "./components/users/AddUsers";
+import EditUsers from './components/users/EditUser';
+import User from "./components/users/User";
 
 //import dependencies
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-function App() {
+function App(props) {
   return (
     <Router>
       <div>
@@ -22,8 +24,10 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About}></Route>
           <Route exact path="/contact" component={Contact} />
-          <Route component={NotFound}></Route>
           <Route path="/users/add" component={AddUsers} />
+          <Route path="/users/edit/:id" component={EditUsers} />
+          <Route path="/users/:id" component={User} />
+          <Route component={NotFound}></Route>
         </Switch>
       </div>
     </Router>
