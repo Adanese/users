@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom';
-
-
+import { useHistory } from "react-router-dom";
 
 const AddUsers = () => {
- let history = useHistory();
+  let history = useHistory();
   const [user, setUser] = useState({
     name: "",
     userName: "",
@@ -14,21 +12,17 @@ const AddUsers = () => {
     website: "",
   });
 
-const onInputChange = e => {
-  console.log(e.target.id);
-  //Understand this
-  setUser({...user, [e.target.name]: e.target.value})
-  
-  
-};
+  const onInputChange = (e) => {
+    console.log(e.target.id);
+    //Understand this
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
-const onSubmit =async (e) =>
-{
-e.preventDefault();
-await axios.post("http://localhost:3001/users", user);
-history.push("/");
-}
-
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:3001/users", user);
+    history.push("/");
+  };
 
   return (
     <div class="mx-auto">
